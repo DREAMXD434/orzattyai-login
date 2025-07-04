@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Login con Google</title>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+    button {
+      background-color: #4285F4;
+      color: white;
+      font-size: 18px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Iniciar Sesión con Google</h1>
+  <button onclick="login()">Entrar con Google</button>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBrXv2Wn3mrSiG_ySfwQexOrOwjYbL_LBw",
+      authDomain: "orzatty-ai.firebaseapp.com",
+      projectId: "orzatty-ai",
+      appId: "1:1095882580908:web:232920ff292cbe82e75009"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    function login() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider).then(result => {
+        result.user.getIdToken().then(token => {
+          // Redirige a la app con el token como parámetro
+          window.location.href = "orzattyai://login-success?token=" + token;
+        });
+      }).catch(error => {
+        alert("Error al iniciar sesión: " + error.message);
+      });
+    }
+  </script>
+</body>
+</html>
